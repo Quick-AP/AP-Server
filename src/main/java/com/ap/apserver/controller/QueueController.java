@@ -14,9 +14,15 @@ public class QueueController {
     @Autowired
     private QueueService service;
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public RestResponse<Integer> registerQueue(@PathVariable("phoneNumber") Integer phoneNumber) {
+    @PostMapping("/register")
+    public RestResponse<Integer> registerQueue(@RequestBody String phoneNumber) {
         int rank = service.registerQueue(phoneNumber);
+        return RestResponse.ok(rank);
+    }
+
+    @RequestMapping(value = "/query", method = RequestMethod.GET)
+    public RestResponse<Integer> queryQueue(@RequestParam String phoneNumber) {
+        int rank = service.queryQueue(phoneNumber);
         return RestResponse.ok(rank);
     }
 }
