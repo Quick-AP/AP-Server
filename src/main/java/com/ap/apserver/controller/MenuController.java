@@ -1,5 +1,6 @@
 package com.ap.apserver.controller;
 
+import com.ap.apserver.base.RestResponse;
 import com.ap.apserver.entity.Menu;
 import com.ap.apserver.service.MenuService;
 import io.swagger.annotations.Api;
@@ -20,8 +21,8 @@ public class MenuController {
 
     @GetMapping("")
     @ApiOperation(value = "get menu list")
-    public List<Menu> queryFoodMenu() {
+    public RestResponse<List<Menu>> queryFoodMenu() {
         List<Menu> menuList = service.queryFoodMenu();
-        return menuList;
+        return RestResponse.ok(menuList);
     }
 }
