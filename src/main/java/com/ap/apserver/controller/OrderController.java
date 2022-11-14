@@ -3,6 +3,7 @@ package com.ap.apserver.controller;
 import com.ap.apserver.base.RestResponse;
 import com.ap.apserver.dto.OrderFoodDTO;
 import com.ap.apserver.service.OrderService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,12 @@ public class OrderController {
     @GetMapping("queryOrder")
     public RestResponse<OrderFoodDTO> oderFoodById(@RequestParam Integer tableId){
         return RestResponse.ok(orderService.getOrderById(tableId));
+    }
+
+    @DeleteMapping("/checkOut")
+    @ApiOperation(value = "check out")
+    public RestResponse<Boolean> checkOut(@RequestParam Integer tableId){
+        return RestResponse.ok(orderService.checkOut(tableId));
     }
 
 

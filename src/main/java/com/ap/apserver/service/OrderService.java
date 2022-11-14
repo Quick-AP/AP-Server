@@ -7,4 +7,6 @@ public interface OrderService {
     Integer save(OrderFoodDTO dto);
 
     OrderFoodDTO getOrderById(Integer tableId);
+
+    Boolean checkOut(Integer tableId);
 }

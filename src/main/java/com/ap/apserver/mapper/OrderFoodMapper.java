@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface OrderFoodMapper {
+public interface OrderFoodMapper extends BaseMapper<OrderFood> {
     Integer insertFood(@Param("list") List<OrderFood> list);
 
     Double sumPrice(Integer tableId);

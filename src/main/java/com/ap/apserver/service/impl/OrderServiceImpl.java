@@ -1,13 +1,16 @@
 package com.ap.apserver.service.impl;
 
+import com.ap.apserver.Utils.CommonConstants;
 import com.ap.apserver.dto.OrderFoodDTO;
 import com.ap.apserver.entity.OrderFood;
 import com.ap.apserver.mapper.OrderFoodMapper;
 import com.ap.apserver.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,5 +40,18 @@ public class OrderServiceImpl implements OrderService {
         dto.setPrice(price);
         dto.setFoodIDList(foodIdList);
         return dto;
+    }
+
+    @Override
+    public Boolean checkOut(Integer tableId) {
+        Example example = new Example(OrderFood.class);
+        example.createCriteria()
+                .andEqualTo("tableId", tableId)
+                .andEqualTo("isDeleted", CommonConstants.NOT_DELETED);
+        OrderFood question = OrderFood.builder()
+                .isDeleted(CommonConstants.IS_DELETED)
+                .build();
+        orderFoodMapper.updateByExampleSelective(question, example);
+        return true;
     }
 }
