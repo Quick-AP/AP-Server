@@ -24,7 +24,7 @@ public class Menu {
     @Column(name = "food_type")
     private String foodType;
 
-    private double price;
+    private Double price;
 
     @Column(name = "image_url")
     private String imageUrl;
