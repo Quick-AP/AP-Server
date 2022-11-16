@@ -43,15 +43,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Boolean checkOut(Integer tableId) {
+    public Double checkOut(Integer tableId) {
         Example example = new Example(OrderFood.class);
         example.createCriteria()
                 .andEqualTo("tableId", tableId)
                 .andEqualTo("isDeleted", CommonConstants.NOT_DELETED);
+        List<OrderFood> list = orderFoodMapper.selectByExample(example);
+        Double totalPrice = 0.0;
+        for (OrderFood food: list) {
+            totalPrice += food.getPrice();
+        }
         OrderFood question = OrderFood.builder()
                 .isDeleted(CommonConstants.IS_DELETED)
                 .build();
         orderFoodMapper.updateByExampleSelective(question, example);
-        return true;
+        return totalPrice;
     }
 }

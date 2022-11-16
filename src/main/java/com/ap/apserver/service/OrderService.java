@@ -8,5 +8,5 @@ public interface OrderService {
 
     OrderFoodDTO getOrderById(Integer tableId);
 
-    Boolean checkOut(Integer tableId);
+    Double checkOut(Integer tableId);
 }

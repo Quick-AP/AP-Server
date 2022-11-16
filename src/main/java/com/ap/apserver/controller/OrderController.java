@@ -25,7 +25,7 @@ public class OrderController {
 
     @DeleteMapping("/checkOut")
     @ApiOperation(value = "check out")
-    public RestResponse<Boolean> checkOut(@RequestParam Integer tableId){
+    public RestResponse<Double> checkOut(@RequestParam Integer tableId){
         return RestResponse.ok(orderService.checkOut(tableId));
     }
 
