@@ -22,12 +22,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `food_id` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `price` decimal(10,1) NOT NULL,
-  `image_url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                        `id` bigint NOT NULL AUTO_INCREMENT,
+                        `food_id` varchar(255) NOT NULL DEFAULT '',
+                        `name` varchar(255) NOT NULL DEFAULT '',
+                        `food_type` varchar(255) NOT NULL DEFAULT '',
+                        `price` decimal(10,1) NOT NULL,
+                        `image_url` text,
+                        PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;
