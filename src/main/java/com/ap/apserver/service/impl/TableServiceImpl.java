@@ -27,10 +27,4 @@ public class TableServiceImpl implements TableService {
     public boolean queryTable(int tableId) {
         return !NotAvailableTableSet.contains(tableId);
     }
-
-    @Override
-    // TODO call this function when CheckOut() is called
-    public void addAvailableTable(int tableId) {
-        NotAvailableTableSet.remove(tableId);
-    }
 }

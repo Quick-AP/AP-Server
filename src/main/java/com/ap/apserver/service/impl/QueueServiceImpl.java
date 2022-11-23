@@ -1,10 +1,12 @@
 package com.ap.apserver.service.impl;
 
 
+import com.ap.apserver.dto.QueryQueueDto;
 import com.ap.apserver.service.QueueService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 1iin
@@ -15,7 +17,7 @@ public class QueueServiceImpl implements QueueService {
 
     @Override
     public int registerQueue(String phoneNumber) {
-        int rank = queryQueue(phoneNumber);
+        int rank = queryQueue(phoneNumber).getRank();
         if (rank != -1) {
             return rank;
         }
@@ -24,13 +26,20 @@ public class QueueServiceImpl implements QueueService {
     }
 
     @Override
-    public int queryQueue(String phoneNumber) {
+    public QueryQueueDto queryQueue(String phoneNumber) {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 19; i++) {
+            if (TableServiceImpl.NotAvailableTableSet.contains(i)) {
+                continue;
+            }
+            list.add(i);
+        }
         for (int i = 0; i < queue.size(); i++) {
             if (queue.get(i).equals(phoneNumber)) {
-                return i;
+                return new QueryQueueDto(i, list);
             }
         }
-        return -1;
+        return new QueryQueueDto(-1, list);
     }
 
 }

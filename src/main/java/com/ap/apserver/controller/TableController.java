@@ -26,7 +26,7 @@ public class TableController {
     }
 
     @RequestMapping(value = "/query", method = RequestMethod.GET)
-    public RestResponse<Boolean> queryQueue(@RequestParam int tableId) {
+    public RestResponse<Boolean> queryTable(@RequestParam int tableId) {
         boolean isAvailable = service.queryTable(tableId);
         return RestResponse.ok(isAvailable);
     }

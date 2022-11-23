@@ -57,6 +57,7 @@ public class OrderServiceImpl implements OrderService {
                 .isDeleted(CommonConstants.IS_DELETED)
                 .build();
         orderFoodMapper.updateByExampleSelective(question, example);
+        TableServiceImpl.NotAvailableTableSet.remove(tableId);
         return totalPrice;
     }
 }

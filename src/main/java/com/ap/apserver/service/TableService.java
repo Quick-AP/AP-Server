@@ -9,6 +9,4 @@ public interface TableService {
     boolean registerTable(int tableId, String phoneNumber);
 
     boolean queryTable(int tableId);
-
-    void addAvailableTable(int tableId);
 }

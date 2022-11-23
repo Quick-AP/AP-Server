@@ -1,6 +1,7 @@
 package com.ap.apserver.controller;
 
 import com.ap.apserver.base.RestResponse;
+import com.ap.apserver.dto.QueryQueueDto;
 import com.ap.apserver.service.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,7 @@ public class QueueController {
     }
 
     @RequestMapping(value = "/query", method = RequestMethod.GET)
-    public RestResponse<Integer> queryQueue(@RequestParam String phoneNumber) {
-        int rank = service.queryQueue(phoneNumber);
-        return RestResponse.ok(rank);
+    public RestResponse<QueryQueueDto> queryQueue(@RequestParam String phoneNumber) {
+        return RestResponse.ok(service.queryQueue(phoneNumber));
     }
 }
