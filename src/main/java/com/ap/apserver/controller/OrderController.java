@@ -19,7 +19,7 @@ public class OrderController {
     }
 
     @GetMapping("queryOrder")
-    public RestResponse<OrderFoodDTO> oderFoodById(@RequestParam Integer tableId){
+    public RestResponse<OrderFoodDTO> orderFoodById(@RequestParam Integer tableId){
         return RestResponse.ok(orderService.getOrderById(tableId));
     }
 
