@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 public class OrderFoodDTO implements Serializable {
     private int tableId;
-    private List<String> foodIDList;
+    private String foodId;
     private Double price;
 }

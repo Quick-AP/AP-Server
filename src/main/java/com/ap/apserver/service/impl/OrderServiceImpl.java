@@ -2,6 +2,7 @@ package com.ap.apserver.service.impl;
 
 import com.ap.apserver.Utils.CommonConstants;
 import com.ap.apserver.dto.OrderFoodDTO;
+import com.ap.apserver.dto.QueryOrder;
 import com.ap.apserver.entity.OrderFood;
 import com.ap.apserver.mapper.OrderFoodMapper;
 import com.ap.apserver.service.OrderService;
@@ -20,30 +21,45 @@ public class OrderServiceImpl implements OrderService {
     private OrderFoodMapper orderFoodMapper;
 
     @Override
-    public Integer save(OrderFoodDTO dto) {
+    public Integer save(List<OrderFoodDTO> dto) {
         List<OrderFood> list = new ArrayList<>();
-        if (!dto.getFoodIDList().isEmpty()) {
-            for (String s : dto.getFoodIDList()) {
-                OrderFood orderFood = new OrderFood();
-                orderFood.setFoodId(s);
-                orderFood.setTableId(dto.getTableId());
+        if (!dto.isEmpty()) {
+            for (OrderFoodDTO orderFood : dto) {
+                list.add(OrderFood.builder()
+                        .tableId(orderFood.getTableId())
+                        .foodId(orderFood.getFoodId())
+                        .price(orderFood.getPrice())
+                        .isDeleted(CommonConstants.NOT_DELETED)
+                        .build());
             }
         }
-        return orderFoodMapper.insertFood(list);
+        return orderFoodMapper.insertList(list);
     }
 
     @Override
-    public OrderFoodDTO getOrderById(Integer tableId) {
-        Double price =   orderFoodMapper.sumPrice(tableId);
+    public QueryOrder getOrderById(Integer tableId) {
         List<String> foodIdList = orderFoodMapper.getFoodIdList(tableId);
-        OrderFoodDTO dto = new OrderFoodDTO();
-        dto.setPrice(price);
-        dto.setFoodIDList(foodIdList);
-        return dto;
+        QueryOrder order = new QueryOrder();
+        order.setSumPrice(sumPrice(tableId));
+        order.setFoodIdList(foodIdList);
+        return order;
     }
 
     @Override
     public Double checkOut(Integer tableId) {
+        Example example = new Example(OrderFood.class);
+        example.createCriteria()
+                .andEqualTo("tableId", tableId)
+                .andEqualTo("isDeleted", CommonConstants.NOT_DELETED);
+        OrderFood question = OrderFood.builder()
+                .isDeleted(CommonConstants.IS_DELETED)
+                .build();
+        orderFoodMapper.updateByExampleSelective(question, example);
+        TableServiceImpl.NotAvailableTableSet.remove(tableId);
+        return sumPrice(tableId);
+    }
+
+    private Double sumPrice(Integer tableId) {
         Example example = new Example(OrderFood.class);
         example.createCriteria()
                 .andEqualTo("tableId", tableId)
@@ -53,11 +69,6 @@ public class OrderServiceImpl implements OrderService {
         for (OrderFood food: list) {
             totalPrice += food.getPrice();
         }
-        OrderFood question = OrderFood.builder()
-                .isDeleted(CommonConstants.IS_DELETED)
-                .build();
-        orderFoodMapper.updateByExampleSelective(question, example);
-        TableServiceImpl.NotAvailableTableSet.remove(tableId);
         return totalPrice;
     }
 }

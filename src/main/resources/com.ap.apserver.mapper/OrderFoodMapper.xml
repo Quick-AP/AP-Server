@@ -3,9 +3,9 @@
 <mapper namespace="com.ap.apserver.mapper.OrderFoodMapper">
 
     <insert id="insertFood">
-        insert into order_food(`table_id`,`food_id`) values 
+        insert into order_food(`table_id`,`food_id`,`price`) values
                                                          <foreach collection="list" item="item" separator=",">
-                                                             (#{item.tableId},#{item.foodId})
+                                                             (#{item.tableId},#{item.foodId},#{item.price})
                                                          </foreach>
     </insert>
     <select id="sumPrice" resultType="java.lang.Double">
