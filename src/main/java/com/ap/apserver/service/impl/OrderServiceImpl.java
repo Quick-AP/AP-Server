@@ -38,7 +38,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public QueryOrder getOrderById(Integer tableId) {
-        List<String> foodIdList = orderFoodMapper.getFoodIdList(tableId);
+        Example example = new Example(OrderFood.class);
+        example.createCriteria()
+                .andEqualTo("tableId", tableId)
+                .andEqualTo("isDeleted", CommonConstants.NOT_DELETED);
+        List<OrderFood> list = orderFoodMapper.selectByExample(example);
+        List<String> foodIdList = new ArrayList<>();
+        for (OrderFood food: list) {
+            foodIdList.add(food.getFoodId());
+        }
         QueryOrder order = new QueryOrder();
         order.setSumPrice(sumPrice(tableId));
         order.setFoodIdList(foodIdList);
