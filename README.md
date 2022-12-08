@@ -8,7 +8,7 @@
 ## Database Setup
 ### Database config file
 ```AP-Server/src/main/resources/application.yaml```
-
+```AP-Server/sql/data.sql```
 
 # API Document
 All APIs used in this app.
