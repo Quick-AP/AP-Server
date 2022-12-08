@@ -1,8 +1,17 @@
-# AP-Server
+# AP-Server Deployment
 
-All APIs used in this app.
+## Dependencies
+- Java 8
+- Maven 3.8.5
+- MySQL 8.0.28
+
+## Database Setup
+### Database config file
+```AP-Server/src/main/resources/application.yaml```
+
 
 # API Document
+All APIs used in this app.
 
 **Baseurl**:  https://{SERVER_ROOT}
 
