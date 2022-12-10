@@ -56,6 +56,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Double checkOut(Integer tableId) {
+        Double sumPrice = sumPrice(tableId);
         Example example = new Example(OrderFood.class);
         example.createCriteria()
                 .andEqualTo("tableId", tableId)
@@ -65,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
                 .build();
         orderFoodMapper.updateByExampleSelective(question, example);
         TableServiceImpl.NotAvailableTableSet.remove(tableId);
-        return sumPrice(tableId);
+        return sumPrice;
     }
 
     private Double sumPrice(Integer tableId) {
